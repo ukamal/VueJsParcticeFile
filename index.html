@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="utility.js"></script>
+    <script src="jsval.js"></script>
+    <title>VueJs</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+
+
+<div class="container">
+    <div class="row centered-form">
+    <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 offset-4">
+        <div class="panel panel-default">
+                 <div class="panel-body">
+                    <form role="form" onsubmit="return validateStandard(this)" role="form" action="index.html" method="post">
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <div class="form-group">
+                    <input err="Name formate invalid" regexp="JSVAL_RX_ALPHA" type="text" name="first_name" id="first_name" class="form-control input-sm" placeholder="First Name">
+                            </div>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6">
+                            <div class="form-group">
+                                <input type="text" name="last_name" id="last_name" class="form-control input-sm" placeholder="Last Name">
+                            </div>
+                        </div>
+                    </div>
+
+                        <div class="form-group">
+                            <input type="email" name="email" id="email" class="form-control input-sm" placeholder="Email Address">
+                        </div>
+                        <div class="form-group">
+                            <select name="" id="" class="form-control" name="country">
+                                <option value="">Select Country</option>
+                                <script>
+                                    printCountryOptions();
+                                </script>
+                            </select>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="password" name="password" id="password" class="form-control input-sm" placeholder="Password">
+                                </div>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <input type="password" name="password_confirmation" id="password_confirmation" class="form-control input-sm" placeholder="Confirm Password">
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="submit" value="Register" class="btn btn-info btn-block">
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+    
+    
+    
+    <div class="container py-5" id="app">
+        <h1 style="text-align: center">Vote your choose</h1>
+        <ul class="list-group">
+            <li v-for="framework in favoriteFramework" class="list-group-item d-flex justify-content-between align-items-center">
+                {{framework.name}}
+                <button @click="framework.votes++" class="btn btn-outline-primary">
+                    Upload
+                    <span class="badge badge-primary badge-pill">
+                        {{framework.votes}}
+                    </span>
+                </button>
+            </li>
+        </ul>
+    </div>
+    <script>
+        new Vue({
+            el:'#app',
+            data:{
+                favoriteFramework:[
+                    {name: "angular", votes:0},
+                    {name: "react", votes:0},
+                    {name: "vue", votes:0},
+                ]
+            }
+        });
+      </script>
+      
+    <br><br><br><br><br><br><br><br><br>
+
+    <div class="container py-5" id="mouse">
+        <div id="box" class="row bg-info">
+            <div @mousemove="getCoordinate" class="col my-auto text-center text-light">
+            Mouse over here
+            </div>
+        </div>
+        <p class="lead text-center mt-3">
+            <span class="badge badge-primary">x</span> {{ x }}
+            <span class="badge badge-primary ml-2">y</span> {{ y }}
+        </p> 
+    </div>
+    <script>
+        new Vue({
+            el:'#mouse',
+            data:{
+                x:0,
+                y:0
+            },
+            methods:{
+                getCoordinate(event){
+                    this.x = event.clientX;
+                    this.y = event.clienty;
+                }
+            }
+        })
+      </script>
+    
+    
+
+        <div class="container py-5" id="hoverd">
+        <div id="box" class="row"
+          :class="{'bg-info':!hovered, 'bg-primary': hovered}" @mouseover="hovered=true" @mouseout="hovered=false"
+           >
+            <div class="col my-auto text-center text-light">
+                mouse hovered
+            </div>
+        </div>
+    </div>
+    <script>
+        new Vue({
+            el: '#hoverd',
+            data:{
+                hovered:false
+            }
+        })
+      </script>
+      
+      
+    <div class="container" id="web">
+        <div class="row">
+            <div class="col-md-6 offset-4">
+                <h1>Vote your favorite Framework</h1>
+                <ul class="list-group mb-3">
+                    <li v-for="framework in favoriteFramework" class="list-group-item d-flex justify-content-between align-items-center">
+                       {{framework.name}}
+                        <buttom v-on:click="upvote{framework}" class="btn btn-outline-primary">
+                            Upvote
+                            <span class="badge badge-primary badge-pill">{{framework.votes}}</span>
+                        </buttom>
+                    </li>
+                </ul>
+                <form v-on:submit.prevent="handleSubmit">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="Enter your another favorite framework">
+                        <div class="input-group-append">
+                            <button class="btn btn-outline-secondary" type="submit">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div> 
+   <script>
+       new Vue({
+           el:'#web',
+           data:{
+               favoriteFramework:[
+                   {name: "Angular", votes: 0},
+                   {name: "React", votes: 0},
+                   {name: "Vue", votes: 0}
+               ],
+           },
+           methods:{
+               upvote(framework){
+                   fremework.votes++
+               },
+               handleSubmit(){
+                   alert('submit');
+               }
+           }
+       });
+    </script><!----problemThisSection------>
+    
+
+
+   
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    
+    
+  </body>
+</html>
